@@ -1,5 +1,10 @@
 version: '3.8'
 
+volumes:
+  db_value:
+  static_value:
+  media_value:
+
 services:
   # db container
   db:
@@ -7,7 +12,7 @@ services:
     volumes:
       - db_value:/var/lib/postgresql/data/
     env_file:
-      - ./.env
+      - .env
 
   # web container
   web:
@@ -19,7 +24,7 @@ services:
     depends_on:
       - db
     env_file:
-      - ./.env
+      - .env
 
   # nginx container
   nginx:
@@ -32,8 +37,3 @@ services:
       - media_value:/var/html/media/
     depends_on:
       - web
-
-volumes:
-  db_value:
-  static_value:
-  media_value:
