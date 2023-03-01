@@ -1,12 +1,12 @@
 ## REST API YamDB - база отзывов о фильмах, музыке и книгах
 
-## Стэк технологий:
-- Python
-- Django Rest Framework
-- PostgreSQL
-- Docker
-- Nginx
-- docker-compose
+## Используемые технологии
+![Alt-Текст](https://img.shields.io/badge/python-3.9-blue)
+![Alt-Текст](https://img.shields.io/badge/django-2.2.16-blue)
+![Alt-Текст](https://img.shields.io/badge/djangorestframework-3.12.4-blue)
+![Alt-Текст](https://img.shields.io/badge/docker-20.10.16-blue)
+![Alt-Текст](https://img.shields.io/badge/nginx-1.21.3-blue)
+![Alt-Текст](https://img.shields.io/badge/gunicorn-20.0.4-blue)
 
 ## Описание
 
@@ -32,31 +32,30 @@
 (при установленном и запущенном Docker)
 ```
 cd infra_sp2/infra
-docker-compose up
 ```
 
-Для пересборки контейнеров выполнять команду:
+## Соберите и запустите контейнер с помощью Docker-compose
 (находясь в папке infra, при запущенном Docker)
 ```
-docker-compose up -d --build
+docker-compose build
+docker-compose up
 ```
-
-В контейнере web выполнить миграции:
-
+## Выполните миграции через Docker-compose
 ```
-docker-compose exec web python manage.py migrate
+docker-compose exec web python manage.py makemigrations --noinput  
+docker-compose exec web python manage.py migrate --noinput
 ```
-
-Создать суперпользователя:
-
+## Соберите через Docker-compose статику
+```
+docker-compose exec web python manage.py collectstatic --no-input
+```
+## Создайте суперпользователя
 ```
 docker-compose exec web python manage.py createsuperuser
 ```
-
-Собрать статику:
-
+## Заполнить базу начальными данными
 ```
-docker-compose exec web python manage.py collectstatic --no-input
+docker-compose exec web python manage.py loaddata fixtures.json
 ```
 
 Проверьте работоспособность приложения, для этого перейдите на страницу:
